@@ -71,6 +71,7 @@ License is mostly placed at top of file except for scripts which it is placed af
 
 * Python 3.6+
 * libmagic installed for OS
+* [python-magic 0.4+](https://pypi.org/project/python-magic)
 
 
 # Usage
