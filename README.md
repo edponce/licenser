@@ -5,51 +5,49 @@ Supports processing any combination of globs, files, and directories (recurse).
 Pruning options allow skipping non-licensing files.
 
 
-# Licenser workflow
+# Workflow
 
 `licenser` uses file identification techniques to infer the format of the license.
 Mainly, resolves how text is commented for that particular source file.
 Then, string matching is used to detect the presence of the license in source files.
 This allows `licenser` to be an idempotent operation.
 
-.. figure:: docs/figures/licenser_workflow.png
-   :scale: 90 %
-   :alt: Licenser workflow
+<img src="docs/figures/licenser_workflow.png" alt="Licenser workflow"/>
 
 ## Grammar of source file comments
 
 Commented text in source code can be represented by the location and form of the comment symbols (`symbol`) and whitespaces (`ws`).
 More generally, most commenting syntaxes conform to the following form:
 ```
-<open_symbol><open_ws>
-<prefix><text>
+<open_block>
+<line_prefix><text>
 ...
-<prefix><text>
-<close_ws><close_symbol>
+<line_prefix><text>
+<close_block>
 ```
 
 ### Prefix lines
 
-This model consists of fixed comment symbols and whitespaces that are prefixed to each line of text: `<prefix> = <symbol><ws>`
+This model consists of fixed comment symbols and whitespaces that are prefixed to each line of text: `<line_prefix> = <symbol><ws>`
 ```
-<prefix><text>
+<symbol><ws><text>
 ...
-<prefix><text>
+<symbol><ws><text>
 ```
 
 ### Open/close block
 
-This model consists of enclosing comment symbols applied to the entire text: `<prefix> = <ws>`
+This model consists of enclosing comment symbols applied to the entire text: `<line_prefix> = <ws>`, `<open_block> = <open_symbol><block_ws>`, and `<close_block> = <block_ws><close_symbol>`
 ```
-<open_symbol><open_ws>
-<prefix><text>
+<open_symbol><block_ws>
+<ws><text>
 ...
-<prefix><text>
-<close_ws><close_symbol>
+<ws><text>
+<block_ws><close_symbol>
 ```
 
 
-# Licenser Design
+# Design
 
 ## FileIdentificator
 
